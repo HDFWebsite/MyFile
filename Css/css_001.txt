@@ -1,0 +1,59 @@
+CSS宽度(CSS width)
+    DIV CSS宽度width样式属性
+    CSS 宽度是指通过CSS 样式设置对应div宽度，以下我们了解传统html宽度、宽度自适应百分比、固定宽度等宽度知识。
+    传统Html 宽度属性单词：width 如width="300";
+    CSS 宽度属性单词：width 如width:300px;
+
+一、Width语法结构知识：
+    .divcss5{
+        Width:200px；
+    }设置divcss5类宽度为200px（像素）
+
+    .divcss5{
+        width:20%；
+    }设置divcss5类宽度为20%(相对与父级百分比宽度)
+
+二、宽度用法
+    1、Width:100%(以百分比计算宽度)
+    2、width:200px;（宽度为200像素(px)）
+    3、Width:20em(宽度为20相对长度单位)
+
+三、原始html标签内宽度width元素属性   -   TOP
+    1）、设置html表格宽度：<td width="200">内容</td>或<td width="20%">内容</td>
+    2）、设置img图片宽度：<img src="图片地址" width="200" />
+    以上宽度都是直接设置标签对象宽度，并且注意“等号”后跟具体数字宽度值（或百分比），
+    具体宽度值不用跟长度单位，默认以像素(px)为单位，在TABLE表格标签或图片img标签内设置宽
+    度时候其值不跟html单位，默认以像素为单位。
+
+四、div+css固定宽度应用案例
+    .divcss5{
+        width:200px;
+        border:1px solid #F00
+    }
+
+五、DIV CSS百分比宽度 自适应宽度案例
+    常常我们看见一个网页宽度随浏览器宽度改变而自动改变，宽度是自适应宽度。运用了百分比
+    即可实现自适应宽度。如果网页总宽度为80%即width:80%;将使此宽度知道自适应宽度为浏览器
+    80%。当然前提是设置最外层没有宽度限制条件下。
+
+    DIV CSS 自适应宽度例子：
+    CSS样式代码：
+        <style type="text/css">
+        body{
+            margin:0 auto;
+            text-align:center;
+            }
+        .yangshi{
+            width:80%;
+            border:1px solid #003;
+            margin:0 auto;
+            }
+        </style>
+    Html中body div代码：
+        <div class="yangshi">我是80%自适应宽度</div>
+    这样即设置内容居中，为了方便测试加上1px黑色边框。大家可以测试观察其内容是随浏览器
+    拉大而宽度变宽而自适应宽度80%，而左右两边始终有10%宽度留着，因为设置此box宽度为80%。
+
+六、css 宽度width总结
+    一般对象设置宽度，我们只需到CSS选择器中设置宽度属性单词加具体长度数字单位值加单位
+    即可，有时我们需要设置宽度为百分比，记得百分比值是由数字+“%”百分号。
