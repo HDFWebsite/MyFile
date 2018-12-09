@@ -1,3 +1,4 @@
+
 认识python(了解)
     一、Python发展背景
         Python的作者，Guido von Rossum（吉多·范·罗苏姆，中国Python程序员都叫他 龟叔），荷兰人。1982年，龟叔从阿姆斯特丹大学获得了数学和计算机硕士
