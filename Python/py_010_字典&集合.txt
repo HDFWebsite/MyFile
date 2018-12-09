@@ -1,0 +1,170 @@
+一、字典
+    1、字典介绍
+        <1>生活中的字典
+            新华字典
+        <2>软件开发中的字典
+            变量info为字典类型：
+                info = {'name':'班长', 'id':100, 'sex':'f', 'address':'地球亚洲中国北京'}
+            说明：
+                字典和列表一样，也能够存储多个数据
+                列表中找某个元素时，是根据下标进行的
+                字典中找某个元素时，是根据'名字'（就是冒号:前面的那个值，例如上面代码中的'name'、'id'、'sex'）
+                字典的每个元素由2部分组成，键:值。例如 'name':'班长' ,'name'为键，'班长'为值
+        <3>根据键访问值
+            info = {'name':'班长', 'id':100, 'sex':'f', 'address':'地球亚洲中国北京'}
+            print(info['name'])
+            print(info['address'])
+            结果:
+                班长
+                地球亚洲中国北京
+            若访问不存在的键，则会报错：
+
+            >>> info['age']
+            Traceback (most recent call last):
+              File "<stdin>", line 1, in <module>
+            KeyError: 'age'
+            在我们不确定字典中是否存在某个键而又想获取其值时，可以使用get方法，还可以设置默认值：
+            >>> age = info.get('age')
+            >>> age #'age'键不存在，所以age为None
+            >>> type(age)
+            <type 'NoneType'>
+            >>> age = info.get('age', 18) # 若info中不存在'age'这个键，就返回默认值18
+            >>> age
+            18
+    2、字典的常见操作1
+        <1>查看元素
+            除了使用key查找数据，还可以使用get来获取数据
+            demo:
+                info = {'name':'吴彦祖','age':18}
+                print(info['age']) # 获取年龄
+                # print(info['sex']) # 获取不存在的key，会发生异常
+                print(info.get('sex')) # 获取不存在的key，获取到空的内容，不会出现异常
+        <2>修改元素
+            字典的每个元素中的数据是可以修改的，只要通过key找到，即可修改
+            demo:
+                info = {'name':'班长', 'id':100, 'sex':'f', 'address':'地球亚洲中国北京'}
+                newId = input('请输入新的学号')
+                info['id'] = int(newId)
+                print('修改之后的id为%d:'%info['id'])
+        <3>添加元素
+            demo:访问不存在的元素
+                info = {'name':'班长', 'sex':'f', 'address':'地球亚洲中国北京'}
+                print('id为:%d'%info['id'])
+            结果:
+                报错！！！
+
+            如果在使用 变量名['键'] = 数据 时，这个“键”在字典中，不存在，那么就会新增这个元素
+            demo:添加新的元素
+                info = {'name':'班长', 'sex':'f', 'address':'地球亚洲中国北京'}
+                # print('id为:%d'%info['id'])#程序会终端运行，因为访问了不存在的键
+                newId = input('请输入新的学号')
+                info['id'] = newId
+                print('添加之后的id为:%d'%info['id'])
+            结果:
+
+                请输入新的学号188
+                添加之后的id为: 188
+        <4>删除元素
+            对字典进行删除操作，有一下几种：
+            del
+            clear()
+                demo:del删除指定的元素
+                    info = {'name':'班长', 'sex':'f', 'address':'地球亚洲中国北京'}
+                    print('删除前,%s'%info['name'])
+                    del info['name']
+                    print('删除后,%s'%info['name'])
+                结果：
+                    删除前，班长
+                    删除后，
+                    KeyError:'name'
+                demo:del删除整个字典
+                    info = {'name':'monitor', 'sex':'f', 'address':'China'}
+                    print('删除前,%s'%info)
+                    del info
+                    print('删除后,%s'%info)
+                结果:
+                     删除前，{'address':'China','name':'monitor', 'sex':'f'}
+                     删除后，
+                     NameError：name 'info' is not defined
+                demo:clear清空整个字典
+                    info = {'name':'monitor', 'sex':'f', 'address':'China'}
+                    print('清空前,%s'%info)
+                    info.clear()
+                    print('清空后,%s'%info)
+                结果：
+                    清空前，{'address':'China','name':'monitor', 'sex':'f'}
+                    清空后，{}
+    3、字典的常见操作2
+        <1>len()
+            测量字典中，键值对的个数
+            len(dict)
+        <2>keys
+            返回一个包含字典所有KEY的列表
+            dict.keys()
+        <3>values
+            返回一个包含字典所有value的列表
+            dict.values
+        <4>items
+            返回一个包含所有（键，值）元祖的列表
+            dict.items()
+        <5>has_key （Python3 已取消）
+            dict.has_key(key)如果key在字典中，返回True，否则返回False
+    4、字典的遍历
+        <1> 遍历字典的key（键）
+            for key in dict.keys()
+                print(key)
+        <2> 遍历字典的value（值）
+            for value in dict.values()
+                print(value)
+        <3> 遍历字典的项（元素）
+            for item in dict.items()
+                print(item)
+        <4> 遍历字典的key-value（键值对）
+            for key,value in dict.items()
+                print('"%s":"%s"'%(key,value))
+二、集合
+    1、集合介绍
+        集合是无序的，集合中的元素是唯一的，集合一般用于元组或者列表中的元素去重。
+    2、定义一个空集合
+      set1 = set()
+      # 注意以下写法为一个空字典
+      set2 = {}
+    3、添加元素(add，update)
+        add
+            set1 = {1, 2, 4, 5}
+            #添加元素
+            set1.add(8)
+        update
+            set1 = {1, 2, 4, 5}
+            #是把要传入的元素拆分，做为个体传入到集合中
+            set1.update("abcd")
+    4、删除元素(remove，pop，discard)
+        remove
+            set1 = {1, 2, 4, 5}
+            # 使用remove删除集合中的元素 如果有 直接删除 如果没有 程序报错
+            set1.remove(22)
+        pop
+            set1 = {1, 2, 4, 5}
+            # 使用pop删除是随机删除集合中的元素 如果set1没有元素讲程序报错
+            set1.pop()
+        discard
+            set1 = {1, 2, 4, 5}
+            # 使用discard删除 如果元素存在 直接删除 如果元素不存在 不做任何操作
+            set1.discard(2)
+    5、交集和并集( & 和 | )
+        交集
+            set1 = {1, 2, 3, 4}
+            set2 = {3, 4, 5, 6}
+            new_set = set1 & set2
+            print(new_set)
+            # {3, 4}
+        并集
+            set1 = {1, 2, 3, 4}
+            set2 = {3, 4, 5, 6}
+            new_set = set1 | set2
+            print(new_set)
+            # {1, 2, 3, 4, 5, 6}
+三、补充
+    集合是大于等于0个元素的无序组合，用{}表示，元素间用逗号隔开；用{}或set（）函数建立集合，但空集合必须用set（）函数。
+    特点：集合元素之间无序，每个元素唯一（不存在相同元素），元素不可更改，不能是可变数据类型，而是字符串、整数型、浮点型、元组（因为可变数据类型元素是
+可以被更改的，一旦集合中的元素被更改就有可能和别的元素一样，导致集合出

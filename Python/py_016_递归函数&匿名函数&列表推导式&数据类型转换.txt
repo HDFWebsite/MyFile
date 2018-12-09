@@ -1,0 +1,142 @@
+一、递归函数
+    <1>什么是递归函数
+        通过前面的学习知道一个函数可以调用其他函数。
+        如果一个函数在内部不调用其它的函数，而是自己本身的话，这个函数就是递归函数。
+
+    <2>递归函数的作用
+    举个例子，我们来计算阶乘 n! = 1 * 2 * 3 * ... * n
+    解决办法1:
+        def calNum(num):
+            i = 1
+            result = 1
+            while i <= num:
+                result += i
+                i += 1
+            return result
+        ret = calNum(3)
+        print(ret)
+
+    解决办法2:
+        def calNum(num):
+            if num >= 1:
+                result = num * calNum(num-1)
+            else:
+                result = 1
+            return result
+        ret = calNum(3)
+        print(ret)
+
+二、匿名函数
+    1、匿名函数
+        用lambda关键词能创建小型匿名函数。这种函数得名于省略了用def声明函数的标准步骤。
+        lambda函数的语法只包含一个语句，如下：
+            lambda [arg1 [,arg2,.....argn]]:expression
+        如下实例：
+            sum = lambda arg1, arg2: arg1 + arg2
+            # 调用sum函数
+            print("Value of total : " % sum( 10, 20 ))
+            print("Value of total :  "% sum( 20, 20 ))
+        以上实例输出结果：
+            Value of total :  30
+            Value of total :  40
+        Lambda函数能接收任何数量的参数但只能返回一个表达式的值
+        匿名函数不能直接调用print，因为lambda需要一个表达式
+
+    2、应用场合
+        1、函数作为参数传递
+            (1)自己定义函数
+                >>> def fun(a, b, opt):
+                ...     print("a = " % a)
+                ...     print("b = " % b)
+                ...     print("result =" % opt(a, b))
+                ...
+                >>> fun(1, 2, lambda x,y:x+y)
+                a = 1
+                b = 2
+                result = 3
+            (2)作为内置函数的参数
+
+        2、排序
+            stus = [
+                {"name": "zhangsan", "age": 18},
+                {"name": "lisi", "age": 19},
+                {"name": "wangwu", "age": 17}
+            ]
+            按name排序：
+            >>> stus.sort(key = lambda x: x['name'])
+            >>> stus
+            [{'age': 19, 'name': 'lisi'}, {'age': 17, 'name': 'wangwu'}, {'age': 18, 'name': 'zhangsan'}]
+            按age排序：
+            >>> stus.sort(key = lambda x: x['age'])
+            >>> stus
+            [{'age': 17, 'name': 'wangwu'}, {'age': 18, 'name': 'zhangsan'}, {'age': 19, 'name': 'lisi'}]
+
+三、列表推导式
+    所谓的列表推导式，就是指的轻量级循环创建列表
+    1. 基本的方式
+        a = [ x for x in range(4)]       #a =[0,1,2,3]
+        a = [ x for x in range(3,4)]     #a =[3]
+        a = [ x for x in range(3,19)]    #a =[3,4,5,6,7......,17,18]
+        a = [ x for x in range(3,19,2)]  #a =[3,5,7,9,11,13,15,17]
+
+    2. 在循环的过程中使用if
+        a = [ x for x in range(3,10) if x%2==0]       #a =[4,6,8]
+        a = [ x for x in range(3,10) if x%2!=0]       #a =[3,5,7,9]
+
+    3. 2个for循环
+        a = [(x,y) for x in range(1,3) for y in range(3)]  #a =[(1,0),(1,1),(1,2),(2,0),(2,1),(2,2)]
+
+    4. 3个for循环
+        a = [(x,y,z) for x in range(1,3) for y in range(3)for y in range(4,6)]
+        #a =[
+          (1,0,4),
+          (1,0,5),
+          (1,1,4),
+          (1,1,5),
+          (1,2,4),
+          (1,2,5),
+          (2,0,4),
+          (2,0,5),
+          (2,1,4),
+          (2,1,5),
+          (2,2,4),
+          (2,2,5),
+        ]
+
+    练习
+        请写出一段 Python 代码实现分组一个 list 里面的元素,比如 [1,2,3,...100]变成 [[1,2,3],[4,5,6]....]
+        参考答案：
+            a = [x for x in range(1,101)]
+            b = [a[x:x+3] for x in range(0,len(a),3)]
+
+四、set、list、tuple
+    1、set是集合类型
+        In[1]:a = set()
+        In[2]:type(a)
+        Out[1]:set
+
+        In[3]:b = [1,2,3,4,3,1]
+        In[4]:c = set(b)
+        In[5]:type(c)
+        Out[5]:set
+
+        In[6]:c
+        Out[6]:{1,2,3,4}
+    2、set、list、tuple之间可以相互转换
+        In[7]:d = list(c)
+        In[8]:d
+        Out[8]:[1,2,3,4]
+
+        In[9]:e = tuple(d)
+        In[10]:e
+        Out[10]:(1,2,3,4)
+
+        In[11]:f = list(d)
+        In[12]:f
+        Out[12]:[1,2,3,4]
+
+        In[13]:g = set(e)
+        In[14]:g
+        Out[13]:{1,2,3,4}
+
+    3、使用set，可以快速的完成对list中的元素去重复的功能
