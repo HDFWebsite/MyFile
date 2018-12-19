@@ -1,0 +1,89 @@
+
+1. 反爬手段和应对
+	通过通讯协议来反爬
+	通过用户行为来反爬
+
+	a. 请求头
+		User-Agent
+		Referer
+		Cookie等
+	b. 代理ip
+	c. 验证码
+		打码平台
+		截图识别
+		AI
+	d. 面包屑
+		用户访问顺序：url_1 url_2 url_3
+		爬虫访问顺序：模拟用户的访问顺序
+
+	e. js反爬
+		python重写js代码
+		js2py模块
+		selenium
+
+	f. 切换到移动版
+
+1. 反反爬的思路
+    	模拟人和浏览器的操作
+
+	a. 请求头反爬 协议	
+		user-agent：faker
+		referer
+		cookie
+
+	b. js反爬
+		1. chrome中点击perserve log按钮能够解决前端通过js跳转的问题
+		2. js加密
+			原理：利用浏览器执行js代码对某个参数进行加密
+			应对：a. 完全搞懂整个js代码，py重写
+			 	 b. 大概看懂js加密过程，利用js2py等模块进行处理
+			  	c. selenium
+
+	c. 验证码反爬
+		一般图片、点击滑动、拼图：
+			selenium、pywin32、pyautogui等模块
+			利用机器学习或深度学习来破解
+			第三方打码平台
+
+	d. ip反爬
+		代理ip
+
+	e. 字体反爬
+		切换到移动版
+		截图识别
+
+	f. css样式反爬
+		计算css的偏移
+		切换到移动版
+		截图识别
+
+	g.其他
+		面包屑检测
+			正常用户：url_a-->url_b-->url_c
+			不正常用户：url_c
+			爬虫：url_a-->url_b-->url_c
+
+		js检测鼠标动作，记录xy坐标和时间戳，形成鼠标动作链，发送给后端进行验证识别
+
+3. js2py模块的使用
+	import js2py
+	context = js2py.EvalJs() # 实例化js执行环境
+	# 传入js代码，并加载执行
+	context.execute(js_str)
+	# 传入所需变量
+	context.变量名 = py定义的变量名
+	# 取出js运行后的某个变量的值
+	ret = context.js中的变量名
+	# 调用js中的函数
+	ret = context.js中的函数名(args)
+
+
+
+# 拓展
+	pyv8模块
+		调用js中的v8引擎
+	js2py模块
+		用py实现js的解释器，加载执行js代码
+	execjs模块
+		把js代码翻译成py代码，再执行
+
