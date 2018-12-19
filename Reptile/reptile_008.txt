@@ -1,0 +1,90 @@
+1. 构造request对象
+	scrapy.Request(url,callback)
+	# callback指定url对应响应的解析函数
+
+
+2. tencent招聘爬虫
+	https://hr.tencent.com/position.php
+	tr_list = //table[@class="tablelist"]//tr # [1:-1]
+	title = tr//a/text()
+	next_href = //a[text()="下一页"]/@href
+	last_href == javascript:;
+
+
+3. scrapy.Request的更多参数
+	scrapy.Request(url,
+				   callback=回调函数,
+				   method='GET',
+				   body={post_data},
+				   headers={不能写cookie},
+				   cookies={cookies_dict},
+				   meta={向callback函数传递数据},
+				   dont_filter=False) # 默认过滤重复请求
+    # 专门发送post请求
+	scrapy.FormRequest(url,
+					   # 没有method、body参数,
+					   formdata={post_data},
+					   # 其他参数和Request都一样)
+4. meta参数的使用:数据在不同的解析函数中的传递
+	# meta是个dict
+	response.meta = request.meta # 引擎中
+	在构造请求对象时：
+		scrapy.Request(url,
+					   callback=func,
+					   meta={'item':item}) # 传递item
+	在指定的解析函数func中：
+		item = response.meta['item'] # 取出传递的item
+	# 只能传递到callback指定的回调函数中，从response中取出
+
+5. BaseItem的使用
+	# 提前定义字段，防止手误，对特定组件进行支撑
+	# 美化日志中数据的输出
+	在items.py中定义字段
+		字段 = scrapy.Field()
+	在spider.py中导入BaseItem类
+        from 项目名.items import BaseItem类
+		item = BaseItem类()
+		item['字段'] = ... # 实例化后像字典一样使用
+
+6. 直接携带cookies发送请求
+	# scrapy.Spider.start_requests函数：
+		# 把起始url构造成request并返回
+	# 起始url就需要cookies才能获取：
+		# 需要重写start_requests函数
+		# 构造起始request时，使用cookies参数
+	# scrapy中cookie不能够放在headers中，在构造请求的时候有专门的cookies参数
+
+7.  其他：
+	scrapy能够自动发送跳转请求
+	scrapy能够自动处理cookie的传递，做状态保持
+		前提：要做正确的请求的逻辑顺序
+
+8. 管道的使用
+	process_item(self,item,spider)
+		# 管道类中必有函数
+		# spider中的解析函数返回一次item，该函数就会被调用一次
+		# spider参数就是返回item的那个爬虫类对象
+		# 该函数用来具体的处理或保存数据
+		# 参数spider就是触发process_item函数执行的那个爬虫类对象
+		# 可以利用spider.name来区分不同的爬虫，进而做不同的处理
+		# 管道类中必须有该函数
+		if spider.name == 'yyy':
+			dosomething
+		elif spider.name == 'xxx':
+			dootherthing
+		# 必须 return item
+		# 其他权重较低的管道类的同名函数才能接收到item
+	open_spider(self, spider): 在爬虫开启的时候仅执行一次
+	close_spider(self, spider): 在爬虫关闭的时候仅执行一次
+
+	# 多个爬虫共用一个管道，通过参数spider的name属性来区别
+	# 一个爬虫使用多个管道
+	# 配置中 权重值越小,越优先执行
+	# 如果process_item函数把item保存到mongodb，其他权重较低的管道类的process_item函数接收到的将是带有_id的数据
+
+    管道使用需要在settings.py中设置开启
+		# 左边是位置，右边是权重值(int)
+		# 权重值越小，权重就越高，越优先执行
+9. 文件中要想展示中文的样子
+	打开文件指定encoding='utf-8'
+	写入json字符串时，json.dumps()加入ensure_ascii=False参数
